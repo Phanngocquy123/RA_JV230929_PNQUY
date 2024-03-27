@@ -28,9 +28,16 @@ public class StudentController {
     }
 
     @GetMapping("/index")
-    public String showListStudent(Model model){
-        List<StudentEntity> studentList = studentService.findAll();
+    public String showListStudent(@RequestParam(name = "key", required = false) String key ,Model model){
+
+        List<StudentEntity> studentList;
+        if (key == null || key.isEmpty()){
+            studentList = studentService.findAll();
+        } else {
+            studentList = studentService.findByStudentName(key);
+        }
         model.addAttribute("students", studentList);
+        model.addAttribute("key", key);
         return "/home/index";
     }
 
@@ -51,7 +58,7 @@ public class StudentController {
         student.setImageUrl(fileStorageService.upload(student.getImageReq()));
         StudentEntity studentEntity = modelMapper.map(student, StudentEntity.class);
         studentService.addAndEdit(studentEntity);
-        return "redirect:index";
+        return "redirect:/home/index";
     }
 
     @GetMapping("/edit/{id}")
@@ -78,7 +85,7 @@ public class StudentController {
         if (entity != null){
             studentService.delete(entity);
         }
-        return "redirect:index";
+        return "redirect:/home/index";
     }
 
 }

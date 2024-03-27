@@ -21,6 +21,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<StudentEntity> findByStudentName(String name) {
+        return studentRepository.findByStudentNameContaining(name);
+    }
+
+    @Override
     public StudentEntity addAndEdit(StudentEntity entity) {
         return studentRepository.save(entity);
     }

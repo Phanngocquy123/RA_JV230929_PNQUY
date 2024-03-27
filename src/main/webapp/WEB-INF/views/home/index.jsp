@@ -12,7 +12,8 @@
     <div>
         <form method="get" action="/home/index">
             <input type="hidden" name="action" value="index">
-            <b>Find:</b>
+            <b>Find: </b>
+            <input type="text" name="key" value="${key}">
             <button type="submit">Search</button>
         </form>
     </div>
@@ -40,7 +41,7 @@
                 <td>${s.address}</td>
                 <td>
                     <a href="/home/edit/${s.studentId}">Edit</a>
-                    <a href="/home/delete/${s.studentId}">Delete</a>
+                    <a href="/home/delete/${s.studentId}" onclick="return confirm('Bạn có muốn xóa không')">Delete</a>
                 </td>
             </tr>
         </c:forEach>
